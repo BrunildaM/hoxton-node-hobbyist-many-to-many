@@ -1,0 +1,33 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:.data.db"
+}
+
+//A user can have multiple hobbies.
+// A user has an id, full name, photo URL, email.
+
+model User {
+  id       Int     @id @default(autoincrement())
+  fullName String
+  photoUrl String?
+  email    String  @unique
+  hobbies  Hobby[]
+}
+
+// A hobby belongs to many users
+//A hobby has an id, name, image URL and active (boolean).
+
+model Hobby {
+  id       Int     @id @default(autoincrement())
+  name     String @unique
+  imageUrl String?
+  active   Boolean
+  users    User[]
+}
